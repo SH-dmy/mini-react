@@ -34,27 +34,27 @@
 // dom.append(textNode)
 
 // v3
-function createTextNode(text) {
-  return {
-    type: 'TEXT_ELEMENT',
-    props: {
-      nodeValue: text,
-      children: [],
-    }
-  }
-}
+// function createTextNode(text) {
+//   return {
+//     type: 'TEXT_ELEMENT',
+//     props: {
+//       nodeValue: text,
+//       children: [],
+//     }
+//   }
+// }
 
-function createElement(type, props, ...children) {
-  return {
-    type: type,
-    props: {
-      ...props,
-      children: children.map((child) => {
-        return typeof child === 'string' ? createTextNode(child) : child
-      }),
-    }
-  }
-}
+// function createElement(type, props, ...children) {
+//   return {
+//     type: type,
+//     props: {
+//       ...props,
+//       children: children.map((child) => {
+//         return typeof child === 'string' ? createTextNode(child) : child
+//       }),
+//     }
+//   }
+// }
 
 // 创建节点 设置props 将节点加入到容器中
 // function render(el, container) {
@@ -93,6 +93,6 @@ function createElement(type, props, ...children) {
 
 // v4 代码抽象
 import ReactDom from "./core/ReactDom.js"
-import App from "./App.js"
+import App from "./App.jsx"
 
 ReactDom.createRoot(document.querySelector('#root')).render(App)
