@@ -73,50 +73,50 @@ function updateProps (dom, props) {
   })
 }
 
-function initChildren(work) {
-  const children = work.props.children
+function initChildren(fiber) {
+  const children = fiber.props.children
   let prevChild = null
   children.forEach((child, index) => {
-    const newWork = {
+    const newFiber = {
       type: child.type,
       props: child.props,
       child: null,
-      parent: work,
+      parent: fiber,
       sibling: null,
       dom: null, 
     }
 
     if (index === 0) {
-      work.child = newWork
+      fiber.child = newFiber
     } else {
-      prevChild.sibling = newWork
+      prevChild.sibling = newFiber
     }
-    prevChild = newWork
+    prevChild = newFiber
   })
 }
 
-function performWorkOfUnit(work) {
+function performWorkOfUnit(fiber) {
   // 1. 创建dom
-  if (!work.dom) {
-    const dom = (work.dom = createDom(work.type))
-    work.parent.dom.append(dom)
+  if (!fiber.dom) {
+    const dom = (fiber.dom = createDom(fiber.type))
+    fiber.parent.dom.append(dom)
 
     // 2. 处理props
-    updateProps(dom, work.props)
+    updateProps(dom, fiber.props)
   }
 
   // 3. 转换链表 设置好指针
-  initChildren(work)
+  initChildren(fiber)
 
   // 4. 返回下一个要执行的任务
   // 孩子 兄弟 叔叔
-  if (work.child) {
-    return work.child
+  if (fiber.child) {
+    return fiber.child
   }
-  if (work.sibling) {
-    return work.sibling
+  if (fiber.sibling) {
+    return fiber.sibling
   }
-  return work.parent?.sibling 
+  return fiber.parent?.sibling 
 }
 
 const React = {
